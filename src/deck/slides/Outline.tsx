@@ -7,7 +7,7 @@ export function Outline(_props: { stage: number }) {
       <SplitLayout
         eyebrow={<Eyebrow>Agenda</Eyebrow>}
         title="Outline"
-        visual={<SectionMark index="00" label="Agenda" />}
+        visual={<SectionMark index="01" label="Agenda" />}
       >
         <DashList
           items={[

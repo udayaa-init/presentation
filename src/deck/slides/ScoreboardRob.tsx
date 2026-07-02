@@ -4,6 +4,7 @@ import {
   SCOREBOARD_ROB_DIAGRAM_STEPS,
 } from '@/deck/diagrams/ScoreboardRobArchitectureCanvas'
 import { DataTable } from '@/deck/DataTable'
+import { SectionMark } from '@/deck/Decor'
 
 export const SCOREBOARD_ROB_STAGE_COUNT = SCOREBOARD_ROB_DIAGRAM_STEPS
 
@@ -15,10 +16,13 @@ export function ScoreboardRob({ stage }: { stage: number }) {
         title="Microarchitecture Optimization: Scoreboard & ROB"
         ratio="balanced"
         visual={
-          <div className="h-full max-h-[32rem] w-full rounded-2xl border border-line bg-white p-2 shadow-sm">
+          stage === 0 ? (
+                          // Shows initially (stage 0)
+                          <SectionMark index="4.1" label="Goals" />
+                        ) : (<div className="h-full max-h-[32rem] w-full rounded-2xl border border-line bg-white p-2 shadow-sm">
             <ScoreboardRobArchitectureCanvas stage={stage} />
           </div>
-        }
+          )}
       >
         <div className="mt-6 space-y-2 font-mono text-[0.92rem] text-ink-soft">
           <p>– Introduction of new mem struct</p>

@@ -7,7 +7,7 @@ export function IntroMotivation(_props: { stage: number }) {
       <SplitLayout
         eyebrow={<Eyebrow>Introduction</Eyebrow>}
         title="Introduction & Motivation"
-        visual={<SectionMark index="01" label="Motivation" />}
+        visual={<SectionMark index="00" label="Motivation" />}
       >
         <BulletList
           items={[

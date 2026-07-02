@@ -15,7 +15,7 @@ import { useStagedCanvas } from './useStagedCanvas'
  * the stage they appear on — reorder or retime the build-up by editing the
  * `step` numbers below; nothing else needs to change.
  */
-export const ANALYSIS_DIAGRAM_STEPS = 10
+export const ANALYSIS_DIAGRAM_STEPS = 11
 
 const LOGICAL_WIDTH = 1000
 const LOGICAL_HEIGHT = 850

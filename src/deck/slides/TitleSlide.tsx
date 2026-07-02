@@ -19,7 +19,7 @@ export function TitleSlide(_props: { stage: number }) {
         </h1>
         <p className="mt-6 max-w-2xl text-[1.2rem] leading-relaxed text-body">
           Microarchitectural optimization of the open-source RISC-V CVA6 core for higher
-          frequency and lower memory latency
+          frequency and hiding memory latency
         </p>
       </div>
 

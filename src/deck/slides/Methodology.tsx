@@ -1,7 +1,7 @@
 import { SlidePage, SplitLayout, Eyebrow, BulletList } from '@/deck/Primitives'
 import { DataTable } from '@/deck/DataTable'
-
-export function Methodology(_props: { stage: number }) {
+import { SectionMark } from '@/deck/Decor'
+export function Methodology({stage}: { stage: number }) {
   return (
     <SlidePage>
       <SplitLayout
@@ -9,7 +9,10 @@ export function Methodology(_props: { stage: number }) {
         title="Experimental Setup & Methodology"
         ratio="balanced"
         visual={
-          <DataTable
+          stage === 0 ? (
+                                    // Shows initially (stage 0)
+                                    <SectionMark index="05" label="Goals" />
+                                  ) :<DataTable
             caption="Configuration Parameters"
             columns={['Parameters', 'FPGA Cfg', 'Small Cfg']}
             rows={[

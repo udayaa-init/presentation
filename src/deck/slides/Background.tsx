@@ -1,6 +1,6 @@
 import { SlidePage, SplitLayout, Eyebrow } from '@/deck/Primitives'
 import { CVA6ArchitectureCanvas, CVA6_DIAGRAM_STEPS } from '@/deck/diagrams/CVA6ArchitectureCanvas'
-
+import { SectionMark } from '@/deck/Decor'
 export const BACKGROUND_STAGE_COUNT = CVA6_DIAGRAM_STEPS
 
 export function Background({ stage }: { stage: number }) {
@@ -11,10 +11,14 @@ export function Background({ stage }: { stage: number }) {
         title="Background: The CVA6 Core"
         ratio="visual-wide"
         visual={
+          stage === 0 ? (
+            // Shows initially (stage 0)
+            <SectionMark index="02" label="Background" />
+          ) : (
           <div className="h-full max-h-[30rem] w-full rounded-2xl border border-line bg-white p-2 shadow-sm">
             <CVA6ArchitectureCanvas stage={stage} />
           </div>
-        }
+          )}
       >
         <ul className="mt-6 space-y-3 text-[0.96rem] leading-relaxed text-body">
           <li className="flex gap-3">

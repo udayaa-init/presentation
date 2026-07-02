@@ -7,7 +7,7 @@ export function ProposedOverview(_props: { stage: number }) {
       <SplitLayout
         eyebrow={<Eyebrow>Proposed Optimizations</Eyebrow>}
         title="Proposed Optimization Overview"
-        visual={<SectionMark index="02" label="Goals" />}
+        visual={<SectionMark index="04" label="Goals" />}
       >
         <BulletList
           items={[

@@ -2,14 +2,27 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useDeck } from './useDeck'
 import type { SlideDefinition } from './types'
-
+import planvLogo from '@/assets/logos/planV_logo.png'
 export function DeckShell({ slides }: { slides: SlideDefinition[] }) {
   const { slideIndex, stage, stageCount, goNext, goPrev, goTo } = useDeck(slides)
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-paper">
+      
+      {/* --- ADDED WATERMARK HERE --- */}
+      <div className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center opacity-10">
+        {/* Replace the src with the actual path to your logo/watermark */}
+        <img 
+          src={planvLogo}
+          alt="Watermark" 
+          className="h-auto w-1/2 object-contain grayscale" 
+        />
+      </div>
+      {/* ---------------------------- */}
+
+      {/* Added 'relative z-10' here so the slides sit on top of the watermark */}
       <div
-        className="flex h-full w-full flex-col transition-transform duration-[650ms] ease-[cubic-bezier(0.65,0,0.35,1)]"
+        className="relative z-10 flex h-full w-full flex-col transition-transform duration-[650ms] ease-[cubic-bezier(0.65,0,0.35,1)]"
         style={{ transform: `translateY(-${slideIndex * 100}svh)` }}
       >
         {slides.map(({ id, Component }, i) => (
@@ -72,6 +85,15 @@ export function DeckShell({ slides }: { slides: SlideDefinition[] }) {
           <ChevronDown className="h-4 w-4" />
         </button>
       </div>
+      {slideIndex > 0 && (
+        <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center opacity-4">
+        <img 
+          src={planvLogo} 
+          alt="Watermark" 
+          className="h-auto w-1/2 object-contain grayscale" 
+        />
+      </div>)}
+      
     </div>
   )
 }
