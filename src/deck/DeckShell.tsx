@@ -67,7 +67,7 @@ export function DeckShell({ slides }: { slides: SlideDefinition[] }) {
       )}
 
       {/* nav arrows */}
-      <div className="fixed right-5 bottom-7 z-30 flex flex-col gap-2 md:right-auto md:bottom-9 md:left-20">
+      {/* <div className="fixed right-5 bottom-7 z-30 flex flex-col gap-2 md:right-auto md:bottom-9 md:left-20">
         <button
           aria-label="Previous"
           onClick={goPrev}
@@ -84,7 +84,7 @@ export function DeckShell({ slides }: { slides: SlideDefinition[] }) {
         >
           <ChevronDown className="h-4 w-4" />
         </button>
-      </div>
+      </div> */}
       {slideIndex > 0 && (
         <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center opacity-4">
         <img 

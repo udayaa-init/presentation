@@ -10,7 +10,7 @@ import { useStagedCanvas } from './useStagedCanvas'
  * graph reads as "one state unlocks its transitions" rather than
  * everything snapping in at once.
  */
-export const CONTROLLER_FSM_STEPS = 12
+export const CONTROLLER_FSM_STEPS = 13
 
 const LOGICAL_WIDTH = 1200
 const LOGICAL_HEIGHT = 700

@@ -25,8 +25,8 @@ import { Acknowledgement } from './slides/Acknowledgement'
  */
 export const slides: SlideDefinition[] = [
   { id: 'title', section: 'Cover', Component: TitleSlide },
-  { id: 'intro-motivation', section: 'Introduction & Motivation', Component: IntroMotivation },
-  { id: 'outline', section: 'Outline', Component: Outline },
+  { id: 'intro-motivation', section: 'Introduction & Motivation', Component: IntroMotivation,stageCount:4 },
+  { id: 'outline', section: 'Outline', Component: Outline, stageCount:7 },
   {
     id: 'background',
     section: 'Background: The CVA6 Core',

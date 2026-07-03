@@ -14,16 +14,16 @@ import { useStagedCanvas } from './useStagedCanvas'
  * side by side as a direct before/after comparison rather than building
  * either one up incrementally.
  */
-const LOGICAL_WIDTH = 1050
-const LOGICAL_HEIGHT = 800
+const LOGICAL_WIDTH = 1060
+const LOGICAL_HEIGHT = 640
 
 interface Pt {
   x: number
   y: number
 }
 
-const A = 135 // ellipse x radius
-const B = 75 // ellipse y radius
+const A = 145 // ellipse x radius
+const B = 85 // ellipse y radius
 
 const N_INIT: Pt = { x: 300, y: 400 }
 const N_STRIDE: Pt = { x: 300, y: 150 }
@@ -47,12 +47,12 @@ function drawNode(ctx: CanvasRenderingContext2D, x: number, y: number, text: str
   ctx.stroke()
 
   ctx.fillStyle = INK_DEEP
-  ctx.font = '600 16px "Inter", Arial, sans-serif'
+  ctx.font = '600 35px "Inter", Arial, sans-serif'
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
 
   const lines = text.split('\n')
-  const lineHeight = 22
+  const lineHeight = 40
   const startY = y - ((lines.length - 1) * lineHeight) / 2
   lines.forEach((line, i) => ctx.fillText(line, x, startY + i * lineHeight))
 }
@@ -88,14 +88,14 @@ function drawArrow(
 
   if (!text) return
 
-  ctx.font = '13px "Inter", Arial, sans-serif'
+  ctx.font = '25px "Inter", Arial, sans-serif'
   ctx.textAlign = align
   ctx.textBaseline = 'middle'
 
   const midX = (x1 + x2) / 2 + dx
   const midY = (y1 + y2) / 2 + dy
   const lines = text.split('\n')
-  const lineHeight = 17
+  const lineHeight = 20
   const startY = midY - ((lines.length - 1) * lineHeight) / 2
 
   lines.forEach((line, i) => {
@@ -105,7 +105,7 @@ function drawArrow(
     else if (align === 'right') bgX -= metrics.width
 
     ctx.fillStyle = 'rgba(255,255,255,0.9)'
-    ctx.fillRect(bgX - 2, startY + i * lineHeight - 9, metrics.width + 4, 18)
+    ctx.fillRect(bgX - 4, startY + i * lineHeight - 11, metrics.width + 8, 22)
     ctx.fillStyle = INK
     ctx.fillText(line, midX, startY + i * lineHeight)
   })
@@ -148,6 +148,7 @@ function drawScene(ctx: CanvasRenderingContext2D, variant: 'original' | 'modifie
     drawEdge(ctx, N_HIT2, N_HIT3, 'Stride\nmatch', 40, 0)
     drawEdge(ctx, N_HIT3, N_INIT, 'Stride missmatch', 15, 25)
   } else {
+    drawEdge(ctx, N_HIT1, N_INIT, 'Stride missmatch', 0, -25)
     drawNode(ctx, N_HIT3.x, N_HIT3.y, 'HIT-3')
     drawEdge(ctx, N_HIT1, N_HIT3, 'Stride\nmatch', 40, 0)
     drawEdge(ctx, N_HIT3, N_INIT, 'Stride missmatch', 15, 25)
@@ -159,7 +160,7 @@ function drawScene(ctx: CanvasRenderingContext2D, variant: 'original' | 'modifie
 
 export function FetchflareStateCanvas({ variant }: { variant: 'original' | 'modified' }) {
   const draw = useCallback((ctx: CanvasRenderingContext2D) => drawScene(ctx, variant), [variant])
-  const canvasRef = useStagedCanvas(0, 1, draw, LOGICAL_WIDTH, LOGICAL_HEIGHT)
+  const canvasRef = useStagedCanvas(0, 1, draw, LOGICAL_WIDTH, LOGICAL_HEIGHT, true)
 
   return (
     <canvas

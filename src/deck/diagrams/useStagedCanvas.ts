@@ -18,6 +18,7 @@ export function useStagedCanvas(
   drawScene: (ctx: CanvasRenderingContext2D, continuousStep: number) => void,
   logicalWidth: number,
   logicalHeight: number,
+  ff: boolean,
 ) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -52,7 +53,7 @@ export function useStagedCanvas(
         (dimensions.height * 0.95) / logicalHeight,
       )
       const offsetX = (dimensions.width - logicalWidth * scale) / 2
-      const offsetY = (dimensions.height - logicalHeight * scale) / 2
+      const offsetY = (ff)?-27:(dimensions.height - logicalHeight * scale) / 2
 
       ctx.save()
       ctx.scale(dpr, dpr)

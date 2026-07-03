@@ -35,16 +35,16 @@ export function Methodology({stage}: { stage: number }) {
               Genesys-2 development board with a Xilinx Kintex-7 FPGA.
             </>,
             <>
-              <span className="font-semibold text-ink">Configurations Tested</span>: Master FPGA
-              configuration and a minimized Small configuration.
-            </>,
-            <>
               <span className="font-semibold text-ink">Simulation</span>: Verilator was used for
               cycle-accurate open-source verification.
             </>,
             <>
               <span className="font-semibold text-ink">Benchmarks</span>: Evaluated using
               CoreMark, Dhrystone, and kernels adapted from PolyBench and STREAM.
+            </>,
+            <>
+              <span className="font-semibold text-ink">Configurations Tested</span>: Master FPGA
+              configuration and a minimized Small configuration.
             </>,
           ]}
         />

@@ -19,9 +19,15 @@ export function ControllerFsm({ stage }: { stage: number }) {
           </div>
         }
       >
-        <p className="mt-7 text-[1.04rem] leading-relaxed text-body">
-          – Controller as FSM, state dependent outputs (Moore FSM) -&gt; breaking long paths
+        <div className={`mt-6 space-y-2 font-mono text-[0.92rem] text-ink-soft transition-all duration-700 ease-out ${
+          (stage >= 1)  ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-0 pointer-events-none'
+          }`}>
+          <p className="mt-7 text-[1.04rem] leading-relaxed text-body">
+          – Controller as Moore FSM
         </p>
+           {stage>=12 &&<p>– state dependent outputs -&gt; breaking long paths</p>}
+        </div>
+        
       </SplitLayout>
     </SlidePage>
   )

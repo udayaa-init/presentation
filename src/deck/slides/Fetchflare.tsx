@@ -14,7 +14,7 @@ export function Fetchflare(_props: { stage: number }) {
         ]}
       />
 
-      <div className="mt-6 grid min-h-0 flex-1 grid-cols-2 gap-6">
+      <div className="mt-0 grid min-h-0 flex-1 grid-cols-2 gap-6">
         <div className="flex min-h-0 flex-col rounded-2xl border border-line bg-white p-3 shadow-sm">
           <span className="mb-1 inline-block w-fit rounded-full bg-paper-dim px-2.5 py-0.5 font-mono text-[0.65rem] font-semibold text-muted">
             Integration of the FF

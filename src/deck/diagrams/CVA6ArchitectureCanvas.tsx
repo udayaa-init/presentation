@@ -12,7 +12,7 @@ import { useStagedCanvas } from './useStagedCanvas'
  * reveal steps by editing the numbered `renderElement` calls below — the
  * step number is what the deck's stage index maps to.
  */
-export const CVA6_DIAGRAM_STEPS = 13
+export const CVA6_DIAGRAM_STEPS = 17
 
 const LOGICAL_WIDTH = 1450
 const LOGICAL_HEIGHT = 800
