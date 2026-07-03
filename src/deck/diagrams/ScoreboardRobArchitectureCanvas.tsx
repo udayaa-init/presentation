@@ -13,7 +13,7 @@ import { useStagedCanvas } from './useStagedCanvas'
  * One flat, ordered `items` list tagged with the stage each element appears
  * on — reorder or retime the build-up by editing the `step` numbers below.
  */
-export const SCOREBOARD_ROB_DIAGRAM_STEPS = 10
+export const SCOREBOARD_ROB_DIAGRAM_STEPS = 11
 
 const LOGICAL_WIDTH = 1000
 const LOGICAL_HEIGHT = 850

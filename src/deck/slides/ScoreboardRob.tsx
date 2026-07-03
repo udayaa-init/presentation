@@ -24,12 +24,16 @@ export function ScoreboardRob({ stage }: { stage: number }) {
           </div>
           )}
       >
-        <div className="mt-6 space-y-2 font-mono text-[0.92rem] text-ink-soft">
-          <p>– Introduction of new mem struct</p>
+        <div className={`mt-6 space-y-2 font-mono text-[0.92rem] text-ink-soft transition-all duration-700 ease-out ${
+          (stage >= 1)  ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}>
           <p>– Distribution of responsibilities</p>
+           {stage>=10 &&<p>– Introduction of new mem struct</p>}
         </div>
         <DataTable
-          className="mt-6"
+          className={`mt-6 text-ink-soft transition-all duration-700 ease-out ${
+          (stage >= 10)  ? 'opacity-100 translate-y-0 z-10' : 'opacity-0 translate-y-4 pointer-events-none -z-10'
+          }`}
           dense
           textCols={[1]}
           columns={['Field', 'Meaning']}

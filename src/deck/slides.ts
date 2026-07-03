@@ -38,6 +38,7 @@ export const slides: SlideDefinition[] = [
     id: 'proposed-overview',
     section: 'Proposed Optimization Overview',
     Component: ProposedOverview,
+    stageCount: 3,
   },
   {
     id: 'scoreboard-rob',
