@@ -1,4 +1,4 @@
-import { SlidePage, SplitLayout, Eyebrow, BulletList } from '@/deck/Primitives'
+import { SlidePage, SplitLayout, Eyebrow } from '@/deck/Primitives'
 import { DataTable } from '@/deck/DataTable'
 import { SectionMark } from '@/deck/Decor'
 export function Methodology({stage}: { stage: number }) {

@@ -1,4 +1,4 @@
-import { SlidePage, Eyebrow, SlideTitle, DashList} from '@/deck/Primitives'
+import { SlidePage, Eyebrow, SlideTitle} from '@/deck/Primitives'
 import { FetchflareStateCanvas } from '@/deck/diagrams/FetchflareStateCanvas'
 import { SectionMark } from '@/deck/Decor'
 import { cn } from '@/lib/utils'

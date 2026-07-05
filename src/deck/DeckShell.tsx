@@ -4,7 +4,7 @@ import { useDeck } from './useDeck'
 import type { SlideDefinition } from './types'
 import planvLogo from '@/assets/logos/planV_logo.png'
 export function DeckShell({ slides }: { slides: SlideDefinition[] }) {
-  const { slideIndex, stage, stageCount, goNext, goPrev, goTo } = useDeck(slides)
+  const { slideIndex, stage, stageCount, goTo } = useDeck(slides)
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-paper">

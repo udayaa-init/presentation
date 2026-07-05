@@ -1,6 +1,6 @@
 import { SlidePage, SplitLayout, Eyebrow } from '@/deck/Primitives'
 import { DataTable } from '@/deck/DataTable'
-import { StatCard, StatStack } from '@/deck/StatCard'
+import { StatCard } from '@/deck/StatCard'
 import { SectionMark } from '@/deck/Decor'
 
 interface ResultsPrefetchProps {
