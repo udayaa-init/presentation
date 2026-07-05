@@ -22,9 +22,9 @@ export function IntroMotivation({stage}: { stage: number }) {
         <BulletList
         className="bullet-reveal-list max-w-3xl"
           items={[
-            'Modern System-on-Chips (SoCs) require constant optimization across multiple layers to achieve high efficiency.',
-            'Hardware vendors continuously innovate to keep up with the demand pace with proprietary cross platform optimization techniques and commercial protection.',
-            'the open-source platforms seems comparatively limited. To have the comparative open-source solution, this research leverages the open-source CVA6 CPU core.',
+            'Modern System-on-Chips (SoCs) optimized across multiple layers with proprietary cross platform optimization techniques and commercial protection',
+            'Optimized Open-source platforms seems comparatively limited',
+            'Members from OpenHW are seeking to improve Open-source RISC-V CVA6 core and bring it to industrial grade '
           ]}
         />
       </SplitLayout>

@@ -79,6 +79,7 @@ const edges: { from: string; to: string; path: PathCmd[] }[] = [
   { from: 'FENCE', to: 'WAIT_ON_ACK', path: ['M', 1050, 325, 'Q', 1050, 260, 1040, 205] },
   { from: 'WAIT_ON_ACK', to: 'IDLE', path: ['M', 950, 160, 'Q', 750, 100, 620, 175] },
 
+  { from: 'IDLE', to: 'MISBRANCH', path: ['M', 600, 220, 'Q', 770, 350, 610, 575] },
   { from: 'MISBRANCH', to: 'FLUSHCSR', path: ['M', 545, 585, 'Q', 130, 650, 130, 385] },
   { from: 'MISBRANCH', to: 'EXCEPTION', path: ['M', 555, 580, 'Q', 300, 600, 300, 375] },
   { from: 'MISBRANCH', to: 'SFENCE_VMA', path: ['M', 570, 577, 'Q', 450, 520, 450, 375] },

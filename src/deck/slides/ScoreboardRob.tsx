@@ -18,7 +18,7 @@ export function ScoreboardRob({ stage }: { stage: number }) {
         visual={
           stage === 0 ? (
                           // Shows initially (stage 0)
-                          <SectionMark index="4.1" label="Goals" />
+                          <SectionMark index="04" label="Optimization" />
                         ) : (<div className="h-full max-h-[32rem] w-full rounded-2xl border border-line bg-white p-2 shadow-sm">
             <ScoreboardRobArchitectureCanvas stage={stage} />
           </div>

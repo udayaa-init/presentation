@@ -1,27 +1,22 @@
 import { chromium } from 'playwright';
 import { PDFDocument } from 'pdf-lib';
 import fs from 'fs';
-
+// node ./generate-pdf.js
 async function convertDeckToPdf() {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
 
-  // 1920x1080 Presentation Aspect Ratio
-  await page.setViewportSize({ width: 1920, height: 1080 });
+  // Pixel-perfect 16:9 Presentation Viewport
+  await page.setViewportSize({ width: 1280, height: 730 });
 
   const deckUrl = 'http://localhost:5173'; 
   await page.goto(deckUrl, { waitUntil: 'networkidle' });
 
-  console.log('Deck loaded. Preparing final animated state extraction...');
+  console.log('Deck loaded. Starting sequential stage progression...');
 
-  // Inject CSS to hide all UI controls
+  // Set up standard print rules on the body
   await page.addStyleTag({
     content: `
-      .fixed.inset-y-0.right-5, 
-      .fixed.bottom-9.left-1/2, 
-      .fixed.right-5.bottom-7 { 
-        display: none !important; 
-      }
       body {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
@@ -29,43 +24,38 @@ async function convertDeckToPdf() {
     `
   });
 
-  // Find all buttons in the progress rail to count total slides
+  // Count slides via your progress rail
   const slideButtons = await page.$$('button[aria-label^="Go to slide"]');
   const totalSlides = slideButtons.length;
   
   console.log(`Detected ${totalSlides} total slides.`);
-
   const pdfPages = [];
 
   for (let i = 0; i < totalSlides; i++) {
-    console.log(`Processing slide ${i + 1}/${totalSlides}...`);
+    console.log(`Navigating to slide index ${i + 1}/${totalSlides}...`);
     
-    // 1. Jump to the slide base state (sets slideIndex = i, stage = 0)
+    // 1. Force the deck back to the base state of this specific slide index
     await page.evaluate((index) => {
       const buttons = document.querySelectorAll('button[aria-label^="Go to slide"]');
       if (buttons[index]) buttons[index].click();
     }, i);
 
-    // Short wait for slide transition to settle
-    await page.waitForTimeout(400);
+    // Let the new slide mount and initialize its stage dots
+    await page.waitForTimeout(600);
 
-    // 2. Fast-forward through internal stages until the "Next" button would switch slides
-    // We check if the next button is disabled OR if clicking next would change the active dot indicator
+    // 2. Step through every internal stage using Keyboard actions
     let slideFullyLoaded = false;
-    while (!slideFullyLoaded) {
-      // Check if the "Next" button is disabled completely (handles the absolute last slide)
-      const isNextDisabled = await page.$eval('button[aria-label="Previous"]', () => {
-        // We evaluate if there are active stage dots or if we can fast-forward
-        return false; 
-      }).catch(() => false);
+    let currentStage = 0;
+    let attempts = 0;
+    const MAX_STAGES = 20; 
 
-      // Check how many stage dots are present, and which one is active
-      // Your code: i === stage ? 'w-6 bg-gold' : 'w-1.5 bg-line'
-      // Check how many stage dots are present, and which one is active
-      const activeStageInfo = await page.evaluate(() => {
-        // Escaped the forward slash: .left-1\/2 becomes .left-1\\/2 in the string
+    while (!slideFullyLoaded && attempts < MAX_STAGES) {
+      attempts++;
+
+      // Check current active dot positioning
+      const stageState = await page.evaluate(() => {
         const dots = document.querySelectorAll('.fixed.bottom-9.left-1\\/2 span');
-        if (dots.length === 0) return { current: 0, total: 0 }; 
+        if (dots.length === 0) return { current: 0, total: 0 };
         
         let activeIndex = 0;
         dots.forEach((dot, idx) => {
@@ -76,44 +66,76 @@ async function convertDeckToPdf() {
         return { current: activeIndex, total: dots.length };
       });
 
-      // If there are no internal animation stages, or we are on the very last dot indicator:
-      if (activeStageInfo.total === 0 || activeStageInfo.current === activeStageInfo.total - 1) {
+      console.log(`  -> Stage state: ${stageState.current + 1}/${stageState.total || 1}`);
+
+      // If there are no animation steps, or we are sitting on the final dot
+      if (stageState.total === 0 || stageState.current === stageState.total - 1) {
         slideFullyLoaded = true;
       } else {
-        // Click next to advance the internal animation stage
-        // Use a selector target that bypasses the print hidden state
-        await page.evaluate(() => {
-          const nextBtn = document.querySelector('button[aria-label="Next"]');
-          if (nextBtn) nextBtn.click();
+        // Press ArrowRight to trigger the internal state change without breaking layout
+        await page.keyboard.press('ArrowRight');
+        
+        // Wait for the animation frame to tick over and register the new classes
+        await page.waitForTimeout(400);
+
+        // Safety verification: Check if ArrowRight accidentally advanced the entire slide index early
+        const currentActiveSlide = await page.evaluate(() => {
+          let activeSlideIndex = 0;
+          const buttons = document.querySelectorAll('button[aria-label^="Go to slide"]');
+          buttons.forEach((btn, idx) => {
+            // Adjust this if your active slide rail button uses a different signature class
+            if (btn.classList.contains('bg-gold') || btn.getAttribute('aria-current') === 'true') {
+              activeSlideIndex = idx;
+            }
+          });
+          return activeSlideIndex;
         });
-        // Tiny wait for the layout content to populate/fade in
-        await page.waitForTimeout(200);
+
+        // If the slide index jumped ahead out of turn, back up and break
+        if (currentActiveSlide > i) {
+          console.log(`  -> Detected premature slide jump. Falling back to snapshot layout.`);
+          await page.keyboard.press('ArrowLeft');
+          await page.waitForTimeout(200);
+          slideFullyLoaded = true;
+        }
       }
     }
 
-    // Give it a tiny moment to complete any last fade CSS transition
-    await page.waitForTimeout(300);
+    // Give it a final heartbeat for elements to finish fading up
+    await page.waitForTimeout(400);
 
-    // 3. Take a snapshot now that the final state of the content is completely loaded
+    // 3. Temporarily drop the navigation interface for a flawless snapshot
+    const uiStyleHandle = await page.addStyleTag({
+      content: `
+        .fixed.inset-y-0.right-5, 
+        .fixed.bottom-9.left-1/2, 
+        .fixed.right-5.bottom-7 { 
+          display: none !important; 
+        }
+      `
+    });
+
+    // Capture the layout canvas completely 1:1
     const pageBuffer = await page.pdf({
-      width: '1920px',
-      height: '1080px',
+      width: '1280px',
+      height: '720px',
       printBackground: true,
       margin: { top: 0, right: 0, bottom: 0, left: 0 }
     });
     
     pdfPages.push(pageBuffer);
+
+    // Re-mount UI components so the dot arrays are read correctly on the next loop
+    await uiStyleHandle.evaluate(el => el.remove());
   }
 
   await browser.close();
 
-  // Merge the clean final-state pages
   console.log('Merging final states into presentation PDF...');
-  const { PDFDocument: PDFDoc } = await import('pdf-lib');
-  const mergedPdf = await PDFDoc.create();
+  const mergedPdf = await PDFDocument.create();
   
   for (const buffer of pdfPages) {
-    const pdf = await PDFDoc.load(buffer);
+    const pdf = await PDFDocument.load(buffer);
     const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
     copiedPages.forEach((page) => mergedPdf.addPage(page));
   }

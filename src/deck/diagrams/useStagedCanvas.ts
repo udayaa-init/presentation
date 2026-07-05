@@ -18,7 +18,7 @@ export function useStagedCanvas(
   drawScene: (ctx: CanvasRenderingContext2D, continuousStep: number) => void,
   logicalWidth: number,
   logicalHeight: number,
-  ff: boolean,
+  ff: boolean= false,
 ) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
