@@ -1,4 +1,3 @@
-import { ChevronDown, ChevronUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useDeck } from './useDeck'
 import type { SlideDefinition } from './types'
