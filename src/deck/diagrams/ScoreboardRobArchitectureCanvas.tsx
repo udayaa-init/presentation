@@ -101,7 +101,7 @@ const items: DiagramItem[] = [
   { type: 'line', pts: [[700, 350], [730, 350], [730, 300], [780, 300]], arrow: true, step: 7 },
   { type: 'cloud', x: 780, y: 260, w: 130, h: 80, text: 'Writeback\nlogic', tone: 'gold', step: 7 },
   { type: 'line', pts: [[845, 340], [845, 410], [860, 410]], arrow: true, step: 7 },
-  { type: 'line', pts: [[450, 350], [520, 350], [520, 400], [655, 400], [655, 380]], arrow: true, step: 7 },
+  { type: 'line', pts: [[655, 380], [655, 400], [520, 400], [520, 350], [450, 350] ], arrow: true, step: 7 },
 
   // Step 8 — ROB -> Commit Request
   { type: 'line', pts: [[900, 480], [900, 520], [860, 520], [860, 550]], arrow: true, step: 8 },
